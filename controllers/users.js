@@ -1,5 +1,5 @@
 const path = require('path');
-const { isError } = require('util');
+
 const getDataFromFile = require("../helpers/files");
 
 const dataPath = path.join(__dirname, "..", "data", "users.json");
@@ -20,7 +20,7 @@ const getProfile = (req, res) => {
 
       return res.status(200).send(user)
     })
-    .catch((err) => res.status(500).send(err)
+    .catch((err) => res.status(500).send(err))
 };
 
 
