@@ -1,5 +1,5 @@
 const path = require('path');
-const { isError } = require('util');
+
 const getDataFromFile = require("../helpers/files");
 
 const dataPath = path.join(__dirname, "..", "data", "cards.json");
