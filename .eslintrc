@@ -1,9 +1,8 @@
 {
-  "extends": "airbnb-base",
+  "extends": ["airbnb-base"],
   "rules": {
     "no-underscore-dangle": "off",
-    "javascript.validate.enable": false,
-    "javascript.suggestionActions.enabled": false
+    "no-console": "off",
+    "no-const-assign": "error"
   }
-
 }

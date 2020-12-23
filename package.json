@@ -6,15 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "lint": "eslint ./",
+    "lint:fix": "eslint ./ --fix"
   },
-  "author": "",
+  "author": "Ivan Plisyakov",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^7.2.0",
+    "eslint": "^7.16.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-vue": "^7.3.0"
+    "eslint-plugin-react": "^7.21.5",
+    "nodemon": "^2.0.6"
   },
   "dependencies": {
     "express": "^4.17.1"
