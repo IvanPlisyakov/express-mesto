@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+
   name: {
     type: String,
     required: true,
@@ -20,7 +21,7 @@ const userSchema = new mongoose.Schema({
       validator(v) {
         const regex = /https?:\/\/w{0,3}[a-z0-9\-\.\_\~\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=]*#?\ */gi;
         const state = regex.test(v);
-        return regex.lastIndex === v.length
+        return regex.lastIndex === v.length;
       },
       message: 'Неправильная ссылка на аватар.',
     },
@@ -28,4 +29,3 @@ const userSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('user', userSchema);
-
