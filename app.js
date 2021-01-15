@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 
   next();
 });
-// app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/', routerCards);
 app.use('/', routerUsers);
 app.use((req, res) => {
@@ -31,5 +31,3 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
-
-//
