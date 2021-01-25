@@ -1,4 +1,23 @@
 const User = require('../models/user');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { NODE_ENV, JWT_SECRET } = process.env;
+
+const login = (req, res) => {
+  const { email, password } = req.body;
+
+  return User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign({ _id: user._id },  NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',  { expiresIn: '7d' } );
+
+      res.send({ token });
+    })
+    .catch((err) => {
+      res
+        .status(401)
+        .send({ message: err.message });
+    });
+};
 
 const getUsers = (req, res) => {
   User.find({})
@@ -33,18 +52,13 @@ const updateAvatarProfile = (req, res) => {
 };
 
 const createUsers = (req, res) => {
-  const { name, about, avatar } = req.body;
-  User.create({ name, about, avatar })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({ message: 'Даннные о новом пользователе не пришли' });
-      }
-
-      return res.send({ data: user });
-    })
-    .catch(() => {
-      res.status(400).send({ message: 'Произошла ошибка при создании пользователя' });
-    });
+  bcrypt.hash(req.body.password, 10)
+    .then(hash => User.create({
+      email: req.body.email,
+      password: hash, // записываем хеш в базу
+    }))
+    .then((user) => res.send(user))
+    .catch((err) => res.status(400).send(err));
 };
 
 const getProfile = (req, res) => {
@@ -60,5 +74,18 @@ const getProfile = (req, res) => {
 };
 
 module.exports = {
-  getUsers, updateInfoProfile, updateAvatarProfile, getProfile, createUsers,
+  getUsers, updateInfoProfile, updateAvatarProfile, getProfile, createUsers, login
 };
+
+  /*const { name, about, avatar } = req.body;
+  User.create({ name, about, avatar })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({ message: 'Даннные о новом пользователе не пришли' });
+      }
+
+      return res.send({ data: user });
+    })
+    .catch(() => {
+      res.status(400).send({ message: 'Произошла ошибка при создании пользователя' });
+    });*/

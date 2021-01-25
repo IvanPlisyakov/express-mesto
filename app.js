@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -22,8 +23,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', routerCards);
 app.use('/', routerUsers);
+app.use('/', routerCards);
 app.use((req, res) => {
   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
 });
