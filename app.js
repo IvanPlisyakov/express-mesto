@@ -22,10 +22,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useCreateIndex: true,
   useFindAndModify: false,
 });
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+app.use(cors());
 app.use(bodyParser.json());
 app.get('/crash-test', () => {
   setTimeout(() => {
@@ -66,3 +63,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
+
+//
