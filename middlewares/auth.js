@@ -1,5 +1,5 @@
-const NODE_ENV=production;
-const JWT_SECRET=e19fe2ba302acfd7cfbbe231ad6af3d50a9a2a9a80ea5033e0e704a00d967c27;
+const NODE_ENV = 'production';
+const JWT_SECRET = 'e19fe2ba302acfd7cfbbe231ad6af3d50a9a2a9a80ea5033e0e704a00d967c27';
 const jwt = require('jsonwebtoken');
 
 module.exports.auth = (req, res, next) => {

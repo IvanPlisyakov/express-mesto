@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routerCards = require('./routes/cards.js');
 const routerUsers = require('./routes/users.js');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { errors, celebrate, Joi } = require('celebrate');
 const {auth} = require('./middlewares/auth.js');
 const {login, createUsers} = require('./controllers/users');
@@ -22,8 +23,12 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useCreateIndex: true,
   useFindAndModify: false,
 });
-app.use(cors());
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.use(bodyParser.json());
+app.use(requestLogger);
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
@@ -47,6 +52,7 @@ app.use('/', routerCards);
 app.use((req, res) => {
   res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
 });
+app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
