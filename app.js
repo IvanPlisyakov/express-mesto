@@ -24,7 +24,9 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
 });
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'https://spora.students.nomoredomains.monster');
+  res.header('Access-Control-Allow-Origin: *');
+  res.header('Access-Control-Allow-Methods: *');
+  res.header('Access-Control-Allow-Headers', 'origin, content-type, accept');
 
   next();
 });
