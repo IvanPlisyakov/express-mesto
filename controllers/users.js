@@ -70,7 +70,10 @@ const createUsers = (req, res, next) => {
       email: req.body.email,
       password: hash, // записываем хеш в базу
     }))
-    .then((user) => res.send(user))
+    .then((user) => {
+      console.log("back ok")
+      res.status(201).send(user)
+    })
     .catch(next);
 };
 
