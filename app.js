@@ -43,7 +43,7 @@ app.post('/signin', celebrate({
     password: Joi.string().required().min(8),
   }),
 }),login);
-//app.use(auth);
+app.use(auth);
 app.use('/', routerUsers);
 app.use('/', routerCards);
 app.use((req, res) => {
