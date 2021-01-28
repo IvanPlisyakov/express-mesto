@@ -20,7 +20,10 @@ module.exports.auth = (req, res, next) => {
   } catch (err) {
     return res
       .status(401)
-      .send({ message: 'Необходима авторизация' });
+      .send({
+        message: 'Необходима авторизация',
+        auth: authorization
+    });
   }
 
   req.user = payload;
