@@ -24,8 +24,8 @@ const getUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Нет пользователя с таким id');
       }
-      console.log({ data: user })
-      return res.send({ data: user })
+      console.log(user)
+      return res.send(user)
     })
     .catch(next);
 }
@@ -44,7 +44,7 @@ const updateInfoProfile = (req, res, next) => {
         throw new NotFoundError('Данные об информации профиля не пришли');
       }
 
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch(next);
 };
@@ -57,7 +57,7 @@ const updateAvatarProfile = (req, res, next) => {
         throw new NotFoundError('Данные об аватаре профиля не пришли');
       }
 
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch(next);
 };
@@ -84,7 +84,7 @@ const getProfile = (req, res, next) => {
         return res.status(404).send({ message: 'Пользователя не существует' });
       }
 
-      return res.send({ data: user });
+      return res.send(user);
     })
     .catch(next);
 };
