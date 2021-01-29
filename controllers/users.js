@@ -24,8 +24,8 @@ const getUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Нет пользователя с таким id');
       }
-      console.log(user)
-      return res.send(user)
+      console.log(`${user} getUser back`)
+      res.status(200).send(user)
     })
     .catch(next);
 }
