@@ -38,20 +38,20 @@ const getUsers = (req, res, next) => {
 
 const updateInfoProfile = (req, res, next) => {
   const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about })
+  User.findByIdAndUpdate(req.user._id, { name, about }, {new: true, runValidators: true})
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Данные об информации профиля не пришли');
       }
-
-      return res.send(user);
+      console.log(`${user} updateInfoProfile back`)
+      res.status(200).send(user);
     })
     .catch(next);
 };
 
 const updateAvatarProfile = (req, res, next) => {
   const { avatar } = req.body;
-  User.findByIdAndUpdate(req.user._id, { avatar })
+  User.findByIdAndUpdate(req.user._id, { avatar }, {new: true, runValidators: true})
     .then((user) => {
       if (!user) {
         throw new NotFoundError('Данные об аватаре профиля не пришли');
