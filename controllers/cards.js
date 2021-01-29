@@ -9,7 +9,6 @@ const getCards = (req, res, next) => {
 
 const createCard = (req, res, next) => {
   const { name, link } = req.body;
-  console.log(req.user)
   Card.create({ name, link, owner: req.user._id })
     .then((card) => {
       if (!card) {

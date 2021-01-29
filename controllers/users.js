@@ -2,16 +2,14 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const NotFoundError = require('../errors/not-found-err');
-const NODE_ENV = 'production';
-const JWT_SECRET = 'e19fe2ba302acfd7cfbbe231ad6af3d50a9a2a9a80ea5033e0e704a00d967c27';
-
+require('dotenv').config();
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret' ,  { expiresIn: '7d' } );//
+      const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV  === 'production' ? process.env.NODE_JWT_SECRET : 'dev-secret' ,  { expiresIn: '7d' } );//
 
       res.send({token});
     })
@@ -24,7 +22,7 @@ const getUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Нет пользователя с таким id');
       }
-      console.log(`${user} getUser back`)
+
       res.status(200).send(user)
     })
     .catch(next);
@@ -43,7 +41,7 @@ const updateInfoProfile = (req, res, next) => {
       if (!user) {
         throw new NotFoundError('Данные об информации профиля не пришли');
       }
-      console.log(`${user} updateInfoProfile back`)
+
       res.status(200).send(user);
     })
     .catch(next);
@@ -71,7 +69,7 @@ const createUsers = (req, res, next) => {
       password: hash, // записываем хеш в базу
     }))
     .then((user) => {
-      console.log("back ok")
+
       res.status(201).send(user)
     })
     .catch(next);
