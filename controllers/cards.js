@@ -7,15 +7,16 @@ const getCards = (req, res, next) => {
     .catch(next);
 };
 
-const createCard = (req, res) => {
+const createCard = (req, res, next) => {
   const { name, link } = req.body;
+  console.log(req.user)
   Card.create({ name, link, owner: req.user._id })
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Данные карточки не пришли');
       }
 
-      return res.send({ data: card });
+      return res.send(card);
     })
     .catch(next);
 };
