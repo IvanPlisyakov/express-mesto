@@ -33,7 +33,7 @@ const deleteCard = (req, res, next) => {
 
       Card.findByIdAndRemove(req.params.id)
         .then(() => {
-          return res.send({ data: card });
+          return res.send(card);
         })
     })
     .catch(next);
@@ -50,7 +50,7 @@ const addLikeCard = (req, res, next) => Card.findByIdAndUpdate(
     if (!card) {
       throw new NotFoundError('Карточка не найдена' );
     }
-    return res.send({ data: card });
+    return res.send(card);
   })
   .catch(next);
 
@@ -63,7 +63,7 @@ const removeLikeCard = (req, res, next) => Card.findByIdAndUpdate(
     if (!card) {
       throw new NotFoundError('Карточка не найдена');
     }
-    return res.send({ data: card });
+    return res.send(card);
   })
   .catch(next);
 
