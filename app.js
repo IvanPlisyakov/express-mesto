@@ -44,8 +44,8 @@ app.post('/signin', celebrate({
     password: Joi.string().required().min(8),
   }),
 }),login);
-app.use('/', auth, routerUsers);
-app.use('/', auth, routerCards);
+app.use('/users', auth, routerUsers);
+app.use('/cards', auth, routerCards);
 app.use('/', (req, res, next) => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 });

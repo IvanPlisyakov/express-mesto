@@ -5,20 +5,20 @@ const {
 } = require('../controllers/users');
 
 
-router.get('/users', getUsers);
-router.get('/users/me', getUser);
-router.patch('/users/me', celebrate({
+router.get('/', getUsers);
+router.get('/me', getUser);
+router.patch('/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     about: Joi.string().required().min(2),
   }),
 }),updateInfoProfile);
-router.patch('/users/me/avatar', celebrate({
+router.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
     avatar: Joi.string().required().min(2),
   }),
 }),updateAvatarProfile);
-router.get('/users/:id', celebrate({
+router.get('/:id', celebrate({
   params: Joi.object().keys({
     id: Joi.string().required().min(2),
   }).unknown(true),
