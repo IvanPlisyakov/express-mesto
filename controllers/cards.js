@@ -1,5 +1,6 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
+const card = require('../models/card');
 
 const getCards = (req, res, next) => {
   Card.find({})
@@ -35,7 +36,7 @@ const deleteCard = (req, res, next) => {
           res.send(card);
         })
     })
-    .catch(next);
+    .catch((err) => {res.status(404).send({card: card, massage: "пытаемся найти карточку"})});
 };
 
 // лайки
