@@ -8,7 +8,7 @@ module.exports.auth = (req, res, next) => {
     return res
       .status(401)
       .send({
-        message: 'Необходима авторизация 1',
+        message: 'Необходима авторизация',
         auth: authorization
       });
   }
@@ -23,7 +23,7 @@ module.exports.auth = (req, res, next) => {
     return res
       .status(401)
       .send({
-        message: 'Необходима авторизация 2',
+        message: 'Необходима авторизация',
         auth: authorization
     });
   }

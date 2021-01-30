@@ -79,7 +79,7 @@ const getProfile = (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
       if (!user) {
-        return res.status(404).send({ message: 'Пользователя не существует' });
+        throw new NotFoundError('Пользователя не существует');
       }
 
       return res.send(user);

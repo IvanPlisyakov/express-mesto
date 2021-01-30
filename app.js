@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const routerCards = require('./routes/cards.js');
 const routerUsers = require('./routes/users.js');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const NotFoundError = require('./errors/not-found-err');
 const { errors, celebrate, Joi } = require('celebrate');
 const {auth} = require('./middlewares/auth.js');
 const {login, createUsers} = require('./controllers/users');
@@ -43,10 +44,10 @@ app.post('/signin', celebrate({
     password: Joi.string().required().min(8),
   }),
 }),login);
-app.use('/', auth,routerUsers);
+app.use('/', auth, routerUsers);
 app.use('/', auth, routerCards);
-app.use((req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+app.use('/', (req, res, next) => {
+  throw new NotFoundError('Запрашиваемый ресурс не найден');
 });
 app.use(errorLogger);
 app.use(errors());
@@ -59,7 +60,6 @@ app.use((err, req, res, next) => {
       ? 'На сервере произошла ошибка'
       : message
   });
-  res.status(500).send({ message: 'На сервере произошла ошибка' });
 });
 
 app.listen(PORT, () => {
