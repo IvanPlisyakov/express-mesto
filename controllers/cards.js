@@ -21,7 +21,7 @@ const createCard = (req, res, next) => {
 };
 
 const deleteCard = (req, res, next) => {
-  Card.findById(req.params.id)
+  Card.findOne({_id: req.params.id})
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Карточка не найдена');
@@ -30,9 +30,9 @@ const deleteCard = (req, res, next) => {
         return res.status(403).send('Нельзя удалять чужие карточки');
       }
 
-      Card.findByIdAndRemove(req.params.id)
+      return Card.findByIdAndRemove(req.params.id)
         .then(() => {
-          return res.send(card);
+          res.send(card);
         })
     })
     .catch(next);
