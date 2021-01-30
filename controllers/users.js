@@ -2,6 +2,7 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const NotFoundError = require('../errors/not-found-err');
+const { Console } = require('winston/lib/winston/transports');
 require('dotenv').config();
 
 const login = (req, res, next) => {
@@ -64,8 +65,9 @@ const updateAvatarProfile = (req, res, next) => {
 const createUsers = (req, res, next) => {
   const { email } = req.body;
 
-  User.find({email})
+  User.find({email: email})
     .then((user) => {
+      console.log(user)
       if(!user) {
         bcrypt.hash(req.body.password, 10)
         .then(hash => User.create({
