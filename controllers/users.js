@@ -9,6 +9,7 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
+      console.log(user)
       const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV  === 'production' ? process.env.NODE_JWT_SECRET : 'dev-secret' ,  { expiresIn: '7d' } );//
 
       res.send({token});
@@ -60,19 +61,29 @@ const updateAvatarProfile = (req, res, next) => {
     .catch(next);
 };
 
-
-
 const createUsers = (req, res, next) => {
-  bcrypt.hash(req.body.password, 10)
-    .then(hash => User.create({
-      email: req.body.email,
-      password: hash, // записываем хеш в базу
-    }))
-    .then((user) => {
+  const { email } = req.body;
 
-      res.status(201).send(user)
+  User.find({email})
+    .then((user) => {
+      if(!user) {
+        bcrypt.hash(req.body.password, 10)
+        .then(hash => User.create({
+          email: req.body.email,
+          password: hash, // записываем хеш в базу
+        }))
+        .then((user) => {
+
+          res.status(201).send(user)
+        })
+        .catch(next);
+      }
+
+      return res.status(409).send({ message: 'Пользователь с таким email уже существует' })
     })
     .catch(next);
+
+
 };
 
 const getProfile = (req, res, next) => {

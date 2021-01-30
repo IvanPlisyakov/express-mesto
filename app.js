@@ -17,8 +17,6 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-
-
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -46,7 +44,7 @@ app.post('/signin', celebrate({
 }),login);
 app.use('/users', auth, routerUsers);
 app.use('/cards', auth, routerCards);
-app.use('/', (req, res, next) => {
+app.use( (req, res, next) => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 });
 app.use(errorLogger);
