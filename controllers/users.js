@@ -65,11 +65,10 @@ const updateAvatarProfile = (req, res, next) => {
 const createUsers = (req, res, next) => {
   const { email } = req.body;
 
-  User.find({email: email})
+  User.findOne({email: email})
     .then((user) => {
-      console.log(user)
       if(!user) {
-        bcrypt.hash(req.body.password, 10)
+        return bcrypt.hash(req.body.password, 10)
         .then(hash => User.create({
           email: req.body.email,
           password: hash, // записываем хеш в базу
