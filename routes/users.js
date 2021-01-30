@@ -15,12 +15,12 @@ router.patch('/me', celebrate({
 }),updateInfoProfile);
 router.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required().min(2),
+    avatar: Joi.string().required().regex(/https?:\/\/w{0,3}[a-z0-9-._~:/?#[\]@!$&'()*+,;=]*#?/),
   }),
 }),updateAvatarProfile);
 router.get('/:id', celebrate({
   params: Joi.object().keys({
-    id: Joi.string().required().min(2),
+    id: Joi.string().required().min(24).max(24).hex(),
   }).unknown(true),
 }),getProfile);
 
