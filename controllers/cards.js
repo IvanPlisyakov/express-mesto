@@ -22,11 +22,11 @@ const createCard = (req, res, next) => {
 };
 
 const deleteCard = (req, res, next) => {
-  Card.findOne({_id: req.params.id})
+  Card.findById(req.params.id)
     .then((card) => {
-      /*if (!card) {
+      if (!card) {
         throw new NotFoundError('Карточка не найдена');
-      }*/
+      }
       if(String(card.owner) !== req.user._id) {
         return res.status(403).send('Нельзя удалять чужие карточки');
       }
@@ -36,7 +36,7 @@ const deleteCard = (req, res, next) => {
           res.send(card);
         })
     })
-    .catch((err) => {res.status(400).send({ massage: 'Карточка не найдена'})});
+    .catch(next);
 };
 
 // лайки
