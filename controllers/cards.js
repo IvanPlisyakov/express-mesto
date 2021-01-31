@@ -28,7 +28,7 @@ const deleteCard = (req, res, next) => {
         throw new NotFoundError('Карточка не найдена');
       }
       if(String(card.owner) !== req.user._id) {
-        return res.status(403).send('Нельзя удалять чужие карточки');
+        return res.status(403).send({ massage: 'Нельзя удалять чужие карточки' });
       }
 
       return Card.findByIdAndRemove(req.params.id)
