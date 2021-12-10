@@ -2,7 +2,7 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const NotFoundError = require('../errors/not-found-err');
-const { Console } = require('winston/lib/winston/transports');
+//const { Console } = require('winston/lib/winston/transports');
 require('dotenv').config();
 
 const login = (req, res, next) => {
@@ -11,7 +11,7 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       console.log(user)
-      const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV  === 'production' ? process.env.NODE_JWT_SECRET : 'dev-secret' ,  { expiresIn: '7d' } );//
+      const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV  === 'production' ? process.env.JWT_SECRET : 'dev-secret' ,  { expiresIn: '7d' } );//
 
       res.send({token});
     })
@@ -83,8 +83,6 @@ const createUsers = (req, res, next) => {
       return res.status(409).send({ message: 'Пользователь с таким email уже существует' })
     })
     .catch(next);
-
-
 };
 
 const getProfile = (req, res, next) => {

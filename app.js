@@ -9,11 +9,11 @@ const NotFoundError = require('./errors/not-found-err');
 const { errors, celebrate, Joi } = require('celebrate');
 const {auth} = require('./middlewares/auth.js');
 const {login, createUsers} = require('./controllers/users');
-var cors = require('cors')
+var cors = require('cors');
 const path = require('path');
 
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 const app = express();
 
@@ -22,6 +22,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useCreateIndex: true,
   useFindAndModify: false,
 });
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(requestLogger);
@@ -44,7 +45,7 @@ app.post('/signin', celebrate({
 }),login);
 app.use('/users', auth, routerUsers);
 app.use('/cards', auth, routerCards);
-app.use( (req, res, next) => {
+app.use((req, res, next) => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 });
 app.use(errorLogger);
