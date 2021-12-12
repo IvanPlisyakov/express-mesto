@@ -25,7 +25,7 @@ mongoose.connect('mongodb+srv://IvanPlisyakov:actiVision12@cluster-mesto.ndo6c.m
   useFindAndModify: false,
   useUnifiedTopology: true,
 })
-  .then(() => console.log('mongo commtected'))
+  .then(() => console.log('mongo connected'))
   .catch((err) => {console.log(err)})
 
 app.use(cors());
