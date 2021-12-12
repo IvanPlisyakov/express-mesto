@@ -19,12 +19,14 @@ const { PORT = 3001 } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect('mongodb+srv://IvanPlisyakov:actiVision12@cluster-mesto.ndo6c.mongodb.net/mesto?retryWrites=true&w=majority', {// mongodb://localhost:27017/mestodb
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
-});
+})
+  .then(() => console.log('mongo commtected'))
+  .catch((err) => {console.log(err)})
 
 app.use(cors());
 app.use(bodyParser.json());

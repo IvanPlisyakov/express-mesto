@@ -19,7 +19,7 @@ router.post('/signin', celebrate({
     password: Joi.string().required().min(8),
   }),
 }), login);
-router.use('/movies', auth, routerCards);
+router.use('/cards', auth, routerCards);
 router.use('/users', auth, routerUsers);
 router.use(/\//, auth);
 
