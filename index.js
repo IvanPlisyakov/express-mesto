@@ -53,8 +53,15 @@ app.use('/cards', auth, routerCards);
 app.use((req, res, next) => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 });*/
+
 app.use('/api', routers);
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(/.*/, express.static(path.join(__dirname, 'build')));
+//app.use('/signin', express.static(path.join(__dirname, 'build')));
+//app.use('/signup', express.static(path.join(__dirname, 'build')));
+
+
+
+
 app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
